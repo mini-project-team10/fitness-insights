@@ -40,7 +40,7 @@ export default function Home() {
       {/* Dynamic Background Elements */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-secondary/10 blur-[100px] rounded-full" />
-      
+
       {/* Top Bar */}
       <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-50">
         <div className="flex items-center gap-2">
@@ -54,10 +54,10 @@ export default function Home() {
       <div className="flex-1 flex flex-col lg:flex-row w-full pt-20 lg:pt-0">
         {/* Left Perspective: Brand & Features */}
         <div className="flex-1 flex flex-col justify-center px-8 lg:px-24 z-10 pt-24 lg:pt-0">
-          <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
               <Sparkles className="w-4 h-4 text-primary" />
@@ -92,7 +92,7 @@ export default function Home() {
 
         {/* Right Perspective: Auth Container */}
         <div className="flex-1 flex items-center justify-center p-8 z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -119,7 +119,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="w-full text-center py-4 text-xs text-muted-foreground z-10 border-t border-border/10 bg-background/50 backdrop-blur-sm">
-        Developed by the Mini Project Batch of Team 10 by CSE-D
+        Developed by the Mini Project Batch of Team 10 by CSE-D Students
       </footer>
     </div>
   );
