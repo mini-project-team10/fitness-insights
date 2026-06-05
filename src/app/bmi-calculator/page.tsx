@@ -44,7 +44,7 @@ export default function BmiCalculatorPage() {
                         <div>
                             <div className="flex items-center space-x-2 mb-1">
                                 <Activity className="h-4 w-4 text-primary" />
-                                <span className="text-xs font-semibold tracking-wider text-primary uppercase">FitTrack Tools</span>
+                                <span className="text-xs font-semibold tracking-wider text-primary uppercase">FitTracker Tool</span>
                             </div>
                             <h1 className="text-3xl font-bold text-white uppercase tracking-tight">BMI Calculator</h1>
                         </div>
