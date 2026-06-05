@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
@@ -20,18 +19,15 @@ export default function DashboardPage() {
     const router = useRouter();
     const [currentTime, setCurrentTime] = useState(new Date());
     const [showWeeklyRecords, setShowWeeklyRecords] = useState(false);
-
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
-
     useEffect(() => {
         if (!isLoading && !isAuthenticated) {
             router.push("/");
         }
     }, [isAuthenticated, isLoading, router]);
-
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-background">
@@ -39,11 +35,9 @@ export default function DashboardPage() {
             </div>
         );
     }
-
     if (!isAuthenticated) {
         return null;
     }
-
     const todayDay = currentTime.toLocaleDateString('en-US', { weekday: 'long' });
     const formattedDate = currentTime.toLocaleDateString('en-US', {
         day: 'numeric',
@@ -56,13 +50,10 @@ export default function DashboardPage() {
         second: '2-digit',
         hour12: true
     });
-
     const todayFocus = user?.schedule?.[todayDay] || "Rest Day";
-
     return (
         <div className="min-h-screen bg-background flex flex-col">
             <Navbar />
-            
             <main className="flex-1 space-y-8 p-6 md:p-10 max-w-7xl mx-auto w-full">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-reveal">
                     <div className="space-y-2">
@@ -85,7 +76,6 @@ export default function DashboardPage() {
                             </div>
                         </div>
                     </div>
-                    
                     <div className="flex flex-wrap items-center gap-3">
                         <Button variant="outline" className="glass-effect" onClick={() => setShowWeeklyRecords(true)}>
                             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -98,11 +88,9 @@ export default function DashboardPage() {
                         <UserControls />
                     </div>
                 </div>
-
                 <div className="animate-reveal" style={{ animationDelay: "0.1s" }}>
                     <StatsCards />
                 </div>
-
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-7 animate-reveal" style={{ animationDelay: "0.2s" }}>
                     <Card className="col-span-4 glass-effect border-none shadow-xl overflow-hidden group">
                         <CardHeader>
@@ -115,7 +103,6 @@ export default function DashboardPage() {
                             <Overview />
                         </CardContent>
                     </Card>
-
                     <Card className="col-span-3 glass-effect border-none shadow-xl">
                         <CardHeader>
                             <CardTitle className="text-xl font-bold text-gradient">Quick Actions</CardTitle>
@@ -125,7 +112,7 @@ export default function DashboardPage() {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {/* Gym Session Card */}
-                            <div className="relative overflow-hidden group p-6 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-transparent transition-all duration-300">
+                            <div className="relative overflow-hidden group p-6 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-transparent transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
                                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                                     <Dumbbell className="h-24 w-24 text-primary rotate-12" />
                                 </div>
@@ -148,7 +135,7 @@ export default function DashboardPage() {
                                         </h3>
                                     </div>
                                     <Link href="/gym-session" className="block">
-                                        <Button className="w-full h-14 bg-gradient-primary text-white font-bold rounded-2xl gap-3 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98] border-none text-lg">
+                                        <Button className="w-full h-14 bg-gradient-primary text-white font-bold rounded-2xl gap-3 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95">
                                             <Activity className="h-5 w-5" />
                                             Start Session
                                             <ArrowRight className="h-4 w-4 ml-1" />
@@ -156,9 +143,8 @@ export default function DashboardPage() {
                                     </Link>
                                 </div>
                             </div>
-
                             {/* Activity Recognition Card */}
-                            <Link href="/activity-recognition" className="p-4 rounded-2xl bg-secondary/5 border border-secondary/10 flex items-center justify-between group cursor-pointer hover:bg-secondary/10 transition-all">
+                            <Link href="/activity-recognition" className="p-4 rounded-2xl bg-secondary/5 border border-secondary/10 flex items-center justify-between group cursor-pointer hover:bg-secondary/10 transition-colors">
                                 <div className="flex items-center gap-4">
                                     <div className="p-2 rounded-xl bg-secondary/20">
                                         <Sparkles className="h-5 w-5 text-secondary" />
@@ -172,9 +158,8 @@ export default function DashboardPage() {
                                     <ArrowRight className="h-4 w-4" />
                                 </div>
                             </Link>
-
                             {/* BMI Calculator Card */}
-                            <Link href="/bmi-calculator" className="p-4 rounded-2xl bg-accent/5 border border-accent/10 flex items-center justify-between group cursor-pointer hover:bg-accent/10 transition-all">
+                            <Link href="/bmi-calculator" className="p-4 rounded-2xl bg-accent/5 border border-accent/10 flex items-center justify-between group cursor-pointer hover:bg-accent/10 transition-colors">
                                 <div className="flex items-center gap-4">
                                     <div className="p-2 rounded-xl bg-accent/20">
                                         <Activity className="h-5 w-5 text-accent" />
@@ -191,12 +176,10 @@ export default function DashboardPage() {
                         </CardContent>
                     </Card>
                 </div>
-
                 <div className="pt-4 animate-reveal" style={{ animationDelay: "0.3s" }}>
                     <TrainingPrograms />
                 </div>
             </main>
-
             <WeeklyRecordsModal
                 isOpen={showWeeklyRecords}
                 onClose={() => setShowWeeklyRecords(false)}
