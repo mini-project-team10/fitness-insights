@@ -21,7 +21,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-transparent">
         <div className="relative">
           <div className="w-16 h-16 rounded-full border-4 border-muted border-t-primary animate-spin" />
           <Activity className="absolute inset-0 m-auto text-primary w-6 h-6 animate-pulse" />
@@ -36,10 +36,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden flex flex-col justify-between">
-      {/* Dynamic Background Elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-secondary/10 blur-[100px] rounded-full" />
+    <div className="min-h-screen bg-transparent relative overflow-hidden flex flex-col justify-between">
 
       {/* Top Bar */}
       <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-50">

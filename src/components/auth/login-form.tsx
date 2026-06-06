@@ -86,7 +86,7 @@ export function LoginForm() {
                                 id="email"
                                 placeholder="you@example.com"
                                 type="email"
-                                className="pl-10 bg-black/20 border-white/10 focus:border-blue-500/50 transition-colors text-foreground"
+                                className="pl-10 bg-black/20 border-white/10 focus:border-primary/50 transition-colors text-foreground"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -102,7 +102,7 @@ export function LoginForm() {
                                 id="password"
                                 placeholder="••••••••"
                                 type="password"
-                                className="pl-10 bg-black/20 border-white/10 focus:border-blue-500/50 transition-colors text-foreground"
+                                className="pl-10 bg-black/20 border-white/10 focus:border-primary/50 transition-colors text-foreground"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -112,14 +112,14 @@ export function LoginForm() {
 
                     <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 h-11 cursor-pointer"
+                        className="w-full bg-gradient-primary hover:opacity-90 transition-all duration-300 shadow-lg text-black font-black italic uppercase tracking-wider h-11 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
                         disabled={isLoading}
                     >
                         {isLoading ? (
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
                         ) : (
                             <>
-                                Sign In <ArrowRight className="ml-2 h-4 w-4" />
+                                Sign In <ArrowRight className="ml-2 h-4 w-4 text-black" />
                             </>
                         )}
                     </Button>
@@ -170,7 +170,7 @@ export function LoginForm() {
                     </Button>
                     <Button
                         type="button"
-                        className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 h-11 border-none cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full bg-white/[0.08] hover:bg-white/[0.15] text-white border border-white/10 hover:border-white/20 transition-all duration-300 h-11 font-black italic uppercase tracking-wider cursor-pointer flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]"
                         onClick={loginAsGuest}
                         disabled={isLoading}
                     >
