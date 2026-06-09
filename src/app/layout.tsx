@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
+import { AnimatedBackground } from "@/components/animated-background";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${inter.variable} font-sans antialiased selection:bg-primary/20`}
       >
+        <AnimatedBackground />
         <Providers>{children}</Providers>
       </body>
     </html>

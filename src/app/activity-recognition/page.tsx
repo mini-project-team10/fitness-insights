@@ -7,7 +7,7 @@ import { ActivityClassifier } from "@/components/activity-recognition/ActivityCl
 
 export default function ActivityRecognitionPage() {
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white p-6 md:p-12 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-background to-background">
+        <div className="min-h-screen bg-transparent text-white p-6 md:p-12">
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">

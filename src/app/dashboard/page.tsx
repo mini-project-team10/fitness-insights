@@ -52,7 +52,7 @@ export default function DashboardPage() {
     });
     const todayFocus = user?.schedule?.[todayDay] || "Rest Day";
     return (
-        <div className="min-h-screen bg-background flex flex-col">
+        <div className="min-h-screen bg-transparent flex flex-col">
             <Navbar />
             <main className="flex-1 space-y-8 p-6 md:p-10 max-w-7xl mx-auto w-full">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-reveal">

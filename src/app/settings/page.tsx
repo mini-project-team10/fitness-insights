@@ -70,7 +70,7 @@ export default function SettingsPage() {
 
     if (authLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
+            <div className="min-h-screen flex items-center justify-center bg-transparent">
                 <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
             </div>
         );
@@ -81,7 +81,7 @@ export default function SettingsPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-background to-background p-8">
+        <div className="min-h-screen bg-transparent p-8">
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">

@@ -156,7 +156,7 @@ export default function GymSessionPage() {
     const guides = WORKOUT_GUIDES[todayFocus] || WORKOUT_GUIDES["Rest Day"];
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white p-6 md:p-12 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background">
+        <div className="min-h-screen bg-transparent text-white p-6 md:p-12">
             <div className="max-w-4xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
