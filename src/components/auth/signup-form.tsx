@@ -91,7 +91,7 @@ export function SignupForm() {
                             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                                 id="username"
-                                placeholder="FitnessGURU123"
+                                placeholder="Fitbuddy123"
                                 type="text"
                                 className="pl-10 bg-black/20 border-white/10 focus:border-emerald-500/50 transition-colors"
                                 value={username}
