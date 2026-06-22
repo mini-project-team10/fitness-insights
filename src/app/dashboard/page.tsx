@@ -6,8 +6,6 @@ import { useAuth } from "@/context/auth-context";
 import { Badge } from "@/components/ui/Badge";
 import { Overview } from "@/components/dashboard/Overview"
 import { StatsCards } from "@/components/dashboard/StatsCards"
-import { UserControls } from "@/components/dashboard/UserControls"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Activity, Dumbbell, Calendar as CalendarIcon, Sparkles, Zap } from "lucide-react"
@@ -98,18 +96,6 @@ export default function DashboardPage() {
                             <Zap className="mr-2 h-4 w-4" />
                             Sync Device
                         </Button>
-
-                        {/* Requested quick theme control in top-right area */}
-                        <button
-                            aria-label="Theme quick toggle"
-                            title="Toggle theme"
-                            className="h-10 w-10 rounded-full border border-primary/40 bg-background/80 text-foreground font-bold text-sm flex items-center justify-center shadow-md hover:shadow-lg hover:border-primary/60 transition-all"
-                        >
-                            <span className="leading-none">C</span>
-                        </button>
-
-                        <ThemeToggle />
-                        <UserControls />
                     </div>
                 </div>
 
@@ -139,7 +125,7 @@ export default function DashboardPage() {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {/* Gym Session Card */}
-                            <div className="relative overflow-hidden group p-6 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-transparent transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+                            <div className="relative overflow-hidden group p-6 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-transparent transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10">
                                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                                     <Dumbbell className="h-24 w-24 text-primary rotate-12" />
                                 </div>
@@ -164,7 +150,7 @@ export default function DashboardPage() {
                                     </div>
 
                                     <Link href="/gym-session" className="block">
-                                        <Button className="w-full h-14 bg-gradient-primary text-white font-bold rounded-2xl gap-3 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98] border-none">
+                                        <Button className="w-full h-14 bg-gradient-primary text-white font-bold rounded-2xl gap-3 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
                                             <Activity className="h-5 w-5" />
                                             Start Session
                                             <ArrowRight className="h-4 w-4 ml-1" />
