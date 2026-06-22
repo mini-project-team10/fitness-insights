@@ -112,18 +112,18 @@ export function OnboardingForm() {
     const currentStepData = steps[step - 1];
 
     return (
-        <Card className="w-full max-w-lg mx-auto border-white/10 bg-black/40 backdrop-blur-xl">
+        <Card className="w-full max-w-lg mx-auto border-border bg-card backdrop-blur-xl">
             <CardHeader>
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                         <div className="p-2 bg-primary/10 rounded-lg">
                             <Activity className="h-5 w-5 text-primary" />
                         </div>
-                        <CardTitle className="text-2xl font-bold text-white">Let's Get Started</CardTitle>
+                        <CardTitle className="text-2xl font-bold text-foreground">Let's Get Started</CardTitle>
                     </div>
                     <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Step {step} of 3</span>
                 </div>
-                <CardDescription className="text-base text-white/60">
+                <CardDescription className="text-base text-muted-foreground">
                     {currentStepData.description}
                 </CardDescription>
             </CardHeader>
@@ -140,7 +140,7 @@ export function OnboardingForm() {
                             <div className={`grid gap-4 ${step === 3 ? "grid-cols-2" : "grid-cols-1"}`}>
                                 {currentStepData.fields.map((field) => (
                                     <div key={field.id} className="space-y-2">
-                                        <Label htmlFor={field.id} className="text-sm font-medium text-white/80">{field.label}</Label>
+                                        <Label htmlFor={field.id} className="text-sm font-medium text-foreground/80">{field.label}</Label>
                                         <div className="relative">
                                             <div className="absolute left-3 top-3.5 text-muted-foreground z-10">
                                                 {field.icon}
@@ -150,10 +150,10 @@ export function OnboardingForm() {
                                                     id={field.id}
                                                     value={formData[field.id as keyof typeof formData]}
                                                     onChange={handleChange}
-                                                    className="w-full pl-10 h-12 bg-white/5 border border-white/10 rounded-xl focus:border-primary/50 text-white appearance-none cursor-pointer outline-none text-sm"
+                                                    className="w-full pl-10 h-12 bg-muted/30 border border-border rounded-xl focus:border-primary/50 text-foreground appearance-none cursor-pointer outline-none text-sm"
                                                 >
                                                     {field.options?.map((opt) => (
-                                                        <option key={opt} value={opt} className="bg-[#0a0a0a] text-white">
+                                                        <option key={opt} value={opt} className="bg-card text-foreground">
                                                             {opt}
                                                         </option>
                                                     ))}
@@ -166,7 +166,7 @@ export function OnboardingForm() {
                                                     onChange={handleChange}
                                                     placeholder={field.placeholder}
                                                     required
-                                                    className="pl-10 h-12 bg-white/5 border-white/10 focus:border-primary/50 text-white"
+                                                    className="pl-10 h-12 bg-muted/30 border-border focus:border-primary/50 text-foreground"
                                                 />
                                             )}
                                         </div>
@@ -178,7 +178,7 @@ export function OnboardingForm() {
 
                     <div className="flex gap-4 pt-4">
                         {step > 1 && (
-                            <Button type="button" variant="outline" onClick={prevStep} className="flex-1 border-white/10 hover:bg-white/5 h-12">
+                            <Button type="button" variant="outline" onClick={prevStep} className="flex-1 border-border hover:bg-muted h-12">
                                 Back
                             </Button>
                         )}

@@ -156,7 +156,7 @@ export default function GymSessionPage() {
     const guides = WORKOUT_GUIDES[todayFocus] || WORKOUT_GUIDES["Rest Day"];
 
     return (
-        <div className="min-h-screen bg-transparent text-white p-6 md:p-12">
+        <div className="min-h-screen bg-transparent p-6 md:p-12">
             <div className="max-w-4xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -177,10 +177,10 @@ export default function GymSessionPage() {
                     </div>
                 </div>
 
-                <Card className="border-white/5 bg-white/[0.02] backdrop-blur-3xl overflow-hidden relative min-h-[500px]">
+                <Card className="border-border bg-card/50 backdrop-blur-3xl overflow-hidden relative min-h-[500px]">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 blur-[120px] -translate-y-1/2 translate-x-1/2" />
 
-                    <CardHeader className="relative border-b border-white/5 pb-8 flex flex-row items-center justify-between space-y-0">
+                    <CardHeader className="relative border-b border-border pb-8 flex flex-row items-center justify-between space-y-0">
                         <div className="space-y-1.5">
                             <div className="flex items-center gap-3 mb-2">
                                 <div className="p-2 rounded-lg bg-purple-500/10">
@@ -259,12 +259,12 @@ export default function GymSessionPage() {
                                     </div>
 
                                     <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 space-y-4">
+                                        <div className="p-6 rounded-[2rem] bg-muted/20 border border-border space-y-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="p-2 bg-emerald-500/10 rounded-xl">
                                                     <Target className="h-5 w-5 text-emerald-400" />
                                                 </div>
-                                                <h4 className="font-bold text-white tracking-tight uppercase text-xs">Primary Goal</h4>
+                                                <h4 className="font-bold text-foreground tracking-tight uppercase text-xs">Primary Goal</h4>
                                             </div>
                                             <p className="text-sm text-muted-foreground leading-relaxed">
                                                 {todayFocus === "Rest Day"
@@ -276,12 +276,12 @@ export default function GymSessionPage() {
                                                             : `Hypertrophy focus on ${todayFocus}. Target 3-4 sets per exercise with 8-12 reps for maximum muscle volume.`}
                                             </p>
                                         </div>
-                                        <div className="p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 space-y-4">
+                                        <div className="p-6 rounded-[2rem] bg-muted/20 border border-border space-y-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="p-2 bg-blue-500/10 rounded-xl">
                                                     <Activity className="h-5 w-5 text-blue-400" />
                                                 </div>
-                                                <h4 className="font-bold text-white tracking-tight uppercase text-xs">Pro Tip</h4>
+                                                <h4 className="font-bold text-foreground tracking-tight uppercase text-xs">Pro Tip</h4>
                                             </div>
                                             <p className="text-sm text-muted-foreground leading-relaxed">
                                                 {todayFocus === "Legs"
@@ -305,12 +305,13 @@ export default function GymSessionPage() {
                                         <Button
                                             onClick={() => setViewMode('guides')}
                                             className="w-full h-20 bg-white text-black hover:bg-white/90 text-2xl font-black italic uppercase tracking-tight shadow-[0_20px_50px_rgba(255,255,255,0.1)] rounded-[2rem] group"
+                                            className="w-full h-20 bg-foreground text-background hover:bg-foreground/90 text-2xl font-black italic uppercase tracking-tight rounded-[2rem] group"
                                         >
                                             Let's Go
                                             <ArrowRight className="h-8 w-8 ml-3 transition-transform group-hover:translate-x-2" />
                                         </Button>
                                         <Link href="/dashboard" className="w-full">
-                                            <Button variant="ghost" className="w-full h-14 rounded-2xl text-muted-foreground hover:text-white hover:bg-white/5 font-bold">
+                                            <Button variant="ghost" className="w-full h-14 rounded-2xl text-muted-foreground hover:text-foreground hover:bg-muted/50 font-bold">
                                                 Return to Home
                                             </Button>
                                         </Link>
@@ -326,7 +327,7 @@ export default function GymSessionPage() {
                                 >
                                     <div className="flex items-center justify-between">
                                         <div className="space-y-1">
-                                            <h3 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+                                            <h3 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
                                                 <Zap className="h-5 w-5 text-yellow-400" />
                                                 Form Guides
                                             </h3>
@@ -335,7 +336,7 @@ export default function GymSessionPage() {
                                         <Button
                                             onClick={() => setViewMode('session')}
                                             variant="outline"
-                                            className="rounded-xl border-white/10 hover:bg-white/5"
+                                            className="rounded-xl border-border hover:bg-muted"
                                         >
                                             Close Guides
                                         </Button>
@@ -397,10 +398,10 @@ export default function GymSessionPage() {
                                                         <select
                                                             value={schedule[day]}
                                                             onChange={(e) => handleSelectChange(day, e.target.value)}
-                                                            className="w-full h-14 pl-5 pr-10 bg-white/5 border border-white/10 rounded-2xl focus:border-purple-500/50 text-white appearance-none cursor-pointer outline-none transition-all hover:bg-white/[0.08] text-lg font-medium"
+                                                            className="w-full h-14 pl-5 pr-10 bg-muted/30 border border-border rounded-2xl focus:border-purple-500/50 text-foreground appearance-none cursor-pointer outline-none transition-all hover:bg-muted/50 text-lg font-medium"
                                                         >
                                                             {WORKOUT_OPTIONS.map((option) => (
-                                                                <option key={option} value={option} className="bg-[#0a0a0a] text-white">
+                                                                <option key={option} value={option} className="bg-card text-foreground">
                                                                     {option}
                                                                 </option>
                                                             ))}
@@ -417,12 +418,12 @@ export default function GymSessionPage() {
                                             {DAYS.map((day) => (
                                                 <div
                                                     key={day}
-                                                    className={`p-8 rounded-3xl border flex flex-col items-center justify-center space-y-2 transition-all hover:scale-[1.02] group text-center ${day === todayDay ? 'bg-purple-600/20 border-purple-500 shadow-xl shadow-purple-500/10' : 'bg-white/[0.03] border-white/5 hover:bg-white/5 hover:border-purple-500/20'}`}
+                                                    className={`p-8 rounded-3xl border flex flex-col items-center justify-center space-y-2 transition-all hover:scale-[1.02] group text-center ${day === todayDay ? 'bg-purple-600/20 border-purple-500 shadow-xl shadow-purple-500/10' : 'bg-muted/10 border-border hover:bg-muted/20 hover:border-purple-500/20'}`}
                                                 >
                                                     <span className={`text-xs font-black uppercase tracking-[0.2em] transition-colors ${day === todayDay ? 'text-purple-400' : 'text-muted-foreground group-hover:text-purple-400'}`}>
                                                         {day.slice(0, 3)}
                                                     </span>
-                                                    <span className="text-2xl font-bold text-white tracking-tight">
+                                                    <span className="text-2xl font-bold text-foreground tracking-tight">
                                                         {user?.schedule?.[day] || "Rest"}
                                                     </span>
                                                     {day === todayDay && (
@@ -437,7 +438,7 @@ export default function GymSessionPage() {
                                         <Button
                                             onClick={() => setViewMode('session')}
                                             variant="outline"
-                                            className="flex-1 h-14 rounded-2xl border-white/10 hover:bg-white/5 font-bold"
+                                            className="flex-1 h-14 rounded-2xl border-border hover:bg-muted font-bold"
                                         >
                                             Back to Focus
                                         </Button>
@@ -455,14 +456,14 @@ export default function GymSessionPage() {
                 </Card>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 space-y-3">
+                    <div className="p-6 rounded-3xl bg-muted/10 border border-border space-y-3">
                         <LayoutDashboard className="h-6 w-6 text-blue-400" />
-                        <h4 className="font-bold text-white">Instant Sync</h4>
+                        <h4 className="font-bold text-foreground">Instant Sync</h4>
                         <p className="text-sm text-muted-foreground leading-relaxed">Your daily focus updates immediately across your entire dashboard.</p>
                     </div>
-                    <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 space-y-3 md:col-span-2">
+                    <div className="p-6 rounded-3xl bg-muted/10 border border-border space-y-3 md:col-span-2">
                         <Target className="h-6 w-6 text-emerald-400" />
-                        <h4 className="font-bold text-white">Smart Split Advice</h4>
+                        <h4 className="font-bold text-foreground">Smart Split Advice</h4>
                         <p className="text-sm text-muted-foreground leading-relaxed">
                             Try to avoid training two large muscle groups (like Back and Legs) on consecutive days to ensure optimal CNS recovery and muscle growth.
                         </p>

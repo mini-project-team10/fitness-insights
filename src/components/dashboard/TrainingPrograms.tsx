@@ -93,7 +93,7 @@ export function TrainingPrograms() {
         <div className="space-y-8 max-w-4xl mx-auto">
             <div className="flex flex-col gap-4 text-center md:text-left">
                 <div className="space-y-1">
-                    <h3 className="text-2xl font-bold tracking-tight text-white flex items-center justify-center md:justify-start gap-2">
+                    <h3 className="text-2xl font-bold tracking-tight text-foreground flex items-center justify-center md:justify-start gap-2">
                         <ListChecks className="h-6 w-6 text-primary" />
                         Choose Your Training Focus
                     </h3>
@@ -106,11 +106,11 @@ export function TrainingPrograms() {
                         <select
                             value={selectedId}
                             onChange={(e) => setSelectedId(e.target.value)}
-                            className="w-full h-14 bg-black/40 border border-white/10 rounded-xl px-4 text-white appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium"
+                            className="w-full h-14 bg-muted/50 border border-border rounded-xl px-4 text-foreground appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium"
                         >
-                            <option value="" disabled className="bg-[#0a0a0a]">Select Your Training Program</option>
+                            <option value="" disabled className="bg-card">Select Your Training Program</option>
                             {programs.map((p) => (
-                                <option key={p.id} value={p.id} className="bg-[#0a0a0a] py-2">
+                                <option key={p.id} value={p.id} className="bg-card py-2">
                                     {p.title} - ({p.type})
                                 </option>
                             ))}
@@ -130,18 +130,18 @@ export function TrainingPrograms() {
                         className="space-y-6"
                     >
                         <div className="grid gap-6 md:grid-cols-2">
-                            <Card className="col-span-full border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-3xl overflow-hidden relative group">
+                            <Card className="col-span-full border-border bg-gradient-to-br from-muted/20 to-transparent backdrop-blur-3xl overflow-hidden relative group">
                                 <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${activeProgram.color} blur-[100px] opacity-20`} />
                                 <CardHeader className="relative pb-2">
                                     <div className="flex items-center justify-between mb-4">
                                         <div className={`p-3 rounded-2xl bg-gradient-to-br ${activeProgram.color} shadow-xl`}>
                                             {activeProgram.icon}
                                         </div>
-                                        <Badge variant="outline" className="px-4 py-1 border-white/10 bg-white/5 text-primary-foreground font-bold tracking-widest uppercase text-[10px]">
+                                        <Badge variant="outline" className="px-4 py-1 border-border bg-muted/30 text-foreground font-bold tracking-widest uppercase text-[10px]">
                                             {activeProgram.badge}
                                         </Badge>
                                     </div>
-                                    <CardTitle className="text-3xl text-white font-extrabold">{activeProgram.title}</CardTitle>
+                                    <CardTitle className="text-3xl text-foreground font-extrabold">{activeProgram.title}</CardTitle>
                                     <CardDescription className="text-primary/70 font-bold uppercase tracking-widest">{activeProgram.type} OVERVIEW</CardDescription>
                                 </CardHeader>
                                 <CardContent className="relative">
@@ -151,36 +151,36 @@ export function TrainingPrograms() {
                                 </CardContent>
                             </Card>
 
-                            <Card className="border-white/5 bg-white/[0.02] backdrop-blur-xl group hover:border-emerald-500/30 transition-colors">
+                            <Card className="border-border bg-muted/10 backdrop-blur-xl group hover:border-emerald-500/30 transition-colors">
                                 <CardHeader className="pb-2">
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="p-2 rounded-lg bg-emerald-500/10">
                                             <Utensils className="h-5 w-5 text-emerald-500" />
                                         </div>
-                                        <CardTitle className="text-lg text-white">Dietary & Nutrition Plan</CardTitle>
+                                        <CardTitle className="text-lg text-foreground">Dietary & Nutrition Plan</CardTitle>
                                     </div>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     <div className="space-y-2">
-                                        <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">Structured Habits</p>
+                                        <p className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest font-mono">Structured Habits</p>
                                         <p className="text-sm text-muted-foreground leading-relaxed italic">
                                             "{activeProgram.plan.diet}"
                                         </p>
                                     </div>
                                     <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
                                         <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1 font-mono">Daily Macro Targets</p>
-                                        <p className="text-sm text-white/90 font-medium leading-relaxed">{activeProgram.nutrition}</p>
+                                        <p className="text-sm text-foreground/80 font-medium leading-relaxed">{activeProgram.nutrition}</p>
                                     </div>
                                 </CardContent>
                             </Card>
 
-                            <Card className="border-white/5 bg-white/[0.02] backdrop-blur-xl group hover:border-blue-500/30 transition-colors">
+                            <Card className="border-border bg-muted/10 backdrop-blur-xl group hover:border-blue-500/30 transition-colors">
                                 <CardHeader className="pb-2">
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="p-2 rounded-lg bg-blue-500/10">
                                             <Dumbbell className="h-5 w-5 text-blue-500" />
                                         </div>
-                                        <CardTitle className="text-lg text-white">Training Strategy</CardTitle>
+                                        <CardTitle className="text-lg text-foreground">Training Strategy</CardTitle>
                                     </div>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
@@ -195,7 +195,7 @@ export function TrainingPrograms() {
                                             <CheckCircle2 className="h-3 w-3 text-blue-400" />
                                             <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest font-mono">Coach's Essential Tip</p>
                                         </div>
-                                        <p className="text-sm text-white/90 font-medium">{activeProgram.plan.keyTip}</p>
+                                        <p className="text-sm text-foreground/80 font-medium">{activeProgram.plan.keyTip}</p>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -205,9 +205,9 @@ export function TrainingPrograms() {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-white/5 rounded-3xl bg-white/[0.01]"
+                        className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-border rounded-3xl bg-muted/5"
                     >
-                        <div className="p-4 rounded-full bg-white/5 mb-4">
+                        <div className="p-4 rounded-full bg-muted/30 mb-4">
                             <ListChecks className="h-10 w-10 text-muted-foreground/30" />
                         </div>
                         <p className="text-muted-foreground text-center max-w-xs">

@@ -93,19 +93,19 @@ export function BmiCalculator() {
             case "Normal weight": return "text-emerald-400";
             case "Overweight": return "text-yellow-400";
             case "Obese": return "text-red-400";
-            default: return "text-white";
+            default: return "text-foreground";
         }
     };
 
     return (
-        <Card className="w-full max-w-md mx-auto overflow-hidden border-white/10 bg-black/40 backdrop-blur-xl">
+        <Card className="w-full max-w-md mx-auto overflow-hidden border-border bg-card backdrop-blur-xl">
             <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                         <div className="p-2 bg-primary/10 rounded-lg">
                             <Calculator className="h-5 w-5 text-primary" />
                         </div>
-                        <CardTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                        <CardTitle className="text-2xl font-bold text-gradient">
                             BMI Calculator
                         </CardTitle>
                     </div>
@@ -116,12 +116,12 @@ export function BmiCalculator() {
             </CardHeader>
             <CardContent className="space-y-6">
                 {/* Unit Toggle */}
-                <div className="flex p-1 bg-white/5 rounded-xl border border-white/10">
+                <div className="flex p-1 bg-muted/50 rounded-xl border border-border">
                     <button
                         onClick={() => setUnit("metric")}
                         className={cn(
                             "flex-1 py-1.5 text-xs font-medium rounded-lg transition-all",
-                            unit === "metric" ? "bg-primary text-white shadow-lg" : "text-muted-foreground hover:text-white"
+                            unit === "metric" ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:text-foreground"
                         )}
                     >
                         Metric (cm)
@@ -130,7 +130,7 @@ export function BmiCalculator() {
                         onClick={() => setUnit("imperial")}
                         className={cn(
                             "flex-1 py-1.5 text-xs font-medium rounded-lg transition-all",
-                            unit === "imperial" ? "bg-primary text-white shadow-lg" : "text-muted-foreground hover:text-white"
+                            unit === "imperial" ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:text-foreground"
                         )}
                     >
                         Imperial (ft/in)
@@ -146,7 +146,7 @@ export function BmiCalculator() {
                             placeholder="e.g. 70"
                             value={weight}
                             onChange={(e) => setWeight(e.target.value)}
-                            className="bg-white/5 border-white/10 focus:border-primary/50 h-11"
+                            className="bg-muted/30 border-border focus:border-primary/50 h-11"
                         />
                     </div>
 
@@ -159,7 +159,7 @@ export function BmiCalculator() {
                                 placeholder="e.g. 175"
                                 value={heightCm}
                                 onChange={(e) => setHeightCm(e.target.value)}
-                                className="bg-white/5 border-white/10 focus:border-primary/50 h-11"
+                                className="bg-muted/30 border-border focus:border-primary/50 h-11"
                             />
                         </div>
                     ) : (
@@ -172,7 +172,7 @@ export function BmiCalculator() {
                                     placeholder="e.g. 5"
                                     value={feet}
                                     onChange={(e) => setFeet(e.target.value)}
-                                    className="bg-white/5 border-white/10 focus:border-primary/50 h-11"
+                                    className="bg-muted/30 border-border focus:border-primary/50 h-11"
                                 />
                             </div>
                             <div className="space-y-2">
@@ -183,7 +183,7 @@ export function BmiCalculator() {
                                     placeholder="e.g. 9"
                                     value={inches}
                                     onChange={(e) => setInches(e.target.value)}
-                                    className="bg-white/5 border-white/10 focus:border-primary/50 h-11"
+                                    className="bg-muted/30 border-border focus:border-primary/50 h-11"
                                 />
                             </div>
                         </div>
@@ -198,7 +198,7 @@ export function BmiCalculator() {
                     >
                         Calculate & Suggest
                     </Button>
-                    <Button variant="outline" size="icon" onClick={reset} className="border-white/10 hover:bg-white/5 h-11 w-11">
+                    <Button variant="outline" size="icon" onClick={reset} className="border-border hover:bg-muted h-11 w-11">
                         <RotateCcw className="h-4 w-4" />
                     </Button>
                 </div>
@@ -211,19 +211,19 @@ export function BmiCalculator() {
                             exit={{ opacity: 0, scale: 0.95 }}
                             className="space-y-4"
                         >
-                            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-center relative overflow-hidden">
+                            <div className="p-6 rounded-2xl bg-muted/30 border border-border text-center relative overflow-hidden">
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
                                 <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">BMI Score</div>
-                                <div className="text-5xl font-black text-white mb-2">{bmi}</div>
+                                <div className="text-5xl font-black text-foreground mb-2">{bmi}</div>
                                 <div className={cn("font-bold text-xl uppercase tracking-tight", getCategoryColor(category))}>
                                     {category}
                                 </div>
 
                                 <div className="mt-6 grid grid-cols-4 gap-1">
-                                    <div className={cn("h-1.5 rounded-full", bmi < 18.5 ? "bg-blue-400" : "bg-white/10")} />
-                                    <div className={cn("h-1.5 rounded-full", bmi >= 18.5 && bmi < 25 ? "bg-emerald-400" : "bg-white/10")} />
-                                    <div className={cn("h-1.5 rounded-full", bmi >= 25 && bmi < 30 ? "bg-yellow-400" : "bg-white/10")} />
-                                    <div className={cn("h-1.5 rounded-full", bmi >= 30 ? "bg-red-400" : "bg-white/10")} />
+                                    <div className={cn("h-1.5 rounded-full", bmi < 18.5 ? "bg-blue-400" : "bg-muted")} />
+                                    <div className={cn("h-1.5 rounded-full", bmi >= 18.5 && bmi < 25 ? "bg-emerald-400" : "bg-muted")} />
+                                    <div className={cn("h-1.5 rounded-full", bmi >= 25 && bmi < 30 ? "bg-yellow-400" : "bg-muted")} />
+                                    <div className={cn("h-1.5 rounded-full", bmi >= 30 ? "bg-red-400" : "bg-muted")} />
                                 </div>
                             </div>
 
@@ -240,7 +240,7 @@ export function BmiCalculator() {
                                     </div>
                                     <span className="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold uppercase">{action.type}</span>
                                 </div>
-                                <p className="text-sm text-white/80 leading-relaxed font-medium">
+                                <p className="text-sm text-foreground/80 leading-relaxed font-medium">
                                     {action.details}
                                 </p>
                             </motion.div>
@@ -248,7 +248,7 @@ export function BmiCalculator() {
                     )}
                 </AnimatePresence>
 
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-500/5 border border-blue-500/10 text-[11px] text-blue-200/60 leading-relaxed">
+                <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-500/5 border border-blue-500/10 text-[11px] text-blue-600 dark:text-blue-300/60 leading-relaxed">
                     <Info className="h-4 w-4 mt-0.5 shrink-0" />
                     <p>
                         This is an automated suggestion based on your BMI. For the best results, consult with a fitness professional or nutritionist.

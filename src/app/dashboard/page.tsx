@@ -5,7 +5,6 @@ import { useAuth } from "@/context/auth-context";
 import { Badge } from "@/components/ui/Badge";
 import { Overview } from "@/components/dashboard/Overview"
 import { StatsCards } from "@/components/dashboard/StatsCards"
-import { UserControls } from "@/components/dashboard/UserControls"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Activity, Dumbbell, Calendar as CalendarIcon, Brain, Camera, Sparkles, Zap } from "lucide-react"
@@ -85,7 +84,6 @@ export default function DashboardPage() {
                             <Zap className="mr-2 h-4 w-4" />
                             Sync Device
                         </Button>
-                        <UserControls />
                     </div>
                 </div>
                 <div className="animate-reveal" style={{ animationDelay: "0.1s" }}>
