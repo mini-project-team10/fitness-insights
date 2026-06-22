@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/auth-context";
 import { Button } from "@/components/ui/button";
-import { LogOut, User as UserIcon, Settings, ChevronDown } from "lucide-react";
+import { LogOut, Settings, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -44,10 +44,10 @@ export function UserControls() {
                     <>
                         <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
                         <motion.div
-                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                            className="absolute right-0 bottom-full mb-2 w-64 glass-card p-3 rounded-2xl z-50 border border-primary/20 shadow-2xl shadow-primary/30 backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5"
+                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                            className="absolute right-0 top-full mt-2 w-64 glass-card p-3 rounded-2xl z-50 border border-primary/20 shadow-2xl shadow-primary/30 backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5"
                         >
                             <div className="px-4 py-3 border-b border-primary/15 mb-2 bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-t-xl">
                                 <p className="text-[10px] font-bold text-primary/90 uppercase tracking-[0.2em] mb-1">Account Profile</p>
