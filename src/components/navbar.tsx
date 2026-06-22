@@ -1,9 +1,10 @@
 "use client";
 
 import { ThemeToggle } from "./theme-toggle";
-import { Activity, Menu, Bell } from "lucide-react";
+import { Activity, Bell } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/context/auth-context";
+import { UserControls } from "./dashboard/UserControls";
 
 export function Navbar() {
     const { user } = useAuth();
@@ -39,11 +40,7 @@ export function Navbar() {
                                 <p className="text-sm font-semibold">{user.name || "Athlete"}</p>
                                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none">Pro Member</p>
                             </div>
-                            <div className="w-10 h-10 rounded-full bg-gradient-primary p-[2px]">
-                                <div className="w-full h-full rounded-full bg-card flex items-center justify-center overflow-hidden">
-                                    <span className="text-sm font-bold">{user.name?.[0] || "A"}</span>
-                                </div>
-                            </div>
+                            <UserControls />
                         </div>
                     )}
                 </div>
