@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle2, TrendingUp, Star, Target, Trophy, ChevronDown, ChevronUp, BarChart3, History, Trash2, Zap } from "lucide-react";
+import { X, CheckCircle2, TrendingUp, Star, Target, Trophy, ChevronDown, ChevronUp, BarChart3, History, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/Badge";
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
@@ -22,8 +22,7 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
     const [completions, setCompletions] = useState<Record<string, Record<string, boolean>>>({});
     const [expandedDay, setExpandedDay] = useState<string | null>(null);
     const [todayDay, setTodayDay] = useState("");
-    const [viewMode, setViewMode] = useState<'today' | 'weekly' | 'history'>('today');
-    const [history, setHistory] = useState<{ day: string, accuracy: number, date: string, timestamp: number }[]>([]);
+    const [viewMode, setViewMode] = useState<'today' | 'weekly'>('today');
 
     useEffect(() => {
         setTodayDay(new Date().toLocaleDateString('en-US', { weekday: 'long' }));
@@ -32,7 +31,6 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
     useEffect(() => {
         if (user) {
             if (user.gymCompletions) setCompletions(user.gymCompletions);
-            if (user.gymHistory) setHistory(user.gymHistory);
         } else {
             const saved = localStorage.getItem("gym-detailed-completions");
             if (saved) {
@@ -40,16 +38,6 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
                     setCompletions(JSON.parse(saved));
                 } catch (e) {
                     console.error("Failed to parse gym completions", e);
-                }
-            }
-
-            const savedHistory = localStorage.getItem("gym-performance-history");
-            if (savedHistory) {
-                try {
-                    const parsed = JSON.parse(savedHistory);
-                    setHistory(parsed);
-                } catch (e) {
-                    console.error("Failed to parse gym history", e);
                 }
             }
         }
@@ -104,7 +92,6 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
         }
     };
 
-    // Current Week Stats Calculation
     const getDailyAccuracy = (day: string) => {
         const focus = schedule[day];
         if (!focus || focus === "Rest Day") return 0;
@@ -114,7 +101,6 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
         return Math.round((completed / exercises.length) * 100);
     };
 
-    // Weekly Stats Logic
     let weeklyTotal = 0;
     let weeklyCompleted = 0;
     DAYS.forEach(day => {
@@ -130,14 +116,12 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
         }
     });
 
-    // Today Stats Logic
     const todayAccuracy = getDailyAccuracy(todayDay);
     const todayFocusKey = schedule[todayDay];
     const todayExercises = (todayFocusKey && todayFocusKey !== "Rest Day") ? (workoutGuides[todayFocusKey] || []) : [];
     const todayTotal = todayExercises.length;
     const todayCompleted = todayExercises.filter(ex => completions[todayDay]?.[ex.title]).length;
 
-    // Context-aware stats
     const accuracy = viewMode === 'today' ? todayAccuracy : (weeklyTotal > 0 ? Math.round((weeklyCompleted / weeklyTotal) * 100) : 0);
     const displayTotal = viewMode === 'today' ? todayTotal : weeklyTotal;
     const displayCompleted = viewMode === 'today' ? todayCompleted : weeklyCompleted;
@@ -152,79 +136,6 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
     };
 
     const rating = getRating(accuracy);
-
-    const archiveWeek = async () => {
-        if (weeklyCompleted === 0) return;
-
-        const now = new Date();
-        const currentDayOfWeek = now.getDay(); // 0=Sun, 1=Mon...
-        // Find Monday of the current week
-        const diffToMonday = (currentDayOfWeek === 0 ? -6 : 1 - currentDayOfWeek);
-        const mondayOfThisWeek = new Date(now);
-        mondayOfThisWeek.setDate(now.getDate() + diffToMonday);
-
-        const todayIdx = DAYS.indexOf(todayDay);
-
-        // Archive each day of the current week up to today
-        const newDayEntries = DAYS.map((day, index) => {
-            const focus = schedule[day];
-            if (focus === "Rest Day") return null;
-            if (index > todayIdx) return null; // Don't archive future days
-
-            // Calculate the actual calendar date for this specific day (Monday + index)
-            const entryDate = new Date(mondayOfThisWeek);
-            entryDate.setDate(mondayOfThisWeek.getDate() + index);
-            const dateStamp = entryDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-
-            const acc = getDailyAccuracy(day);
-            return {
-                day: day,
-                accuracy: acc,
-                date: dateStamp,
-                timestamp: entryDate.getTime()
-            };
-        }).filter(entry => entry !== null) as { day: string, accuracy: number, date: string, timestamp: number }[];
-
-        // Merge with history, deduplicating by day AND exact date stamp
-        const existingFiltered = history.filter(h =>
-            !newDayEntries.some(n => n.day === h.day && n.date === h.date)
-        );
-
-        const newHistory = [...existingFiltered, ...newDayEntries];
-        setHistory(newHistory);
-        localStorage.setItem("gym-performance-history", JSON.stringify(newHistory));
-
-        if (user) {
-            try {
-                await updateProfile({
-                    gymHistory: newHistory,
-                    gymCompletions: {} // Reset completions in cloud
-                });
-            } catch (error) {
-                console.error("Failed to archive week to cloud", error);
-            }
-        }
-
-        // Start New Week: Reset completions
-        setCompletions({});
-        localStorage.removeItem("gym-detailed-completions");
-
-        setViewMode('history');
-    };
-
-    const clearHistory = async () => {
-        if (confirm("Are you sure you want to clear your entire performance history?")) {
-            setHistory([]);
-            localStorage.removeItem("gym-performance-history");
-            if (user) {
-                try {
-                    await updateProfile({ gymHistory: [] });
-                } catch (error) {
-                    console.error("Failed to clear cloud history", error);
-                }
-            }
-        }
-    };
 
     const renderDayRow = (day: string, isAlwaysExpanded = false, readOnly = false) => {
         const focus = schedule[day] || "Rest Day";
@@ -317,7 +228,6 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
         );
     };
 
-    // Prepare chart data: Strictly for the "Active Week" (Mon -> Sun)
     const todayIdx = DAYS.indexOf(todayDay);
     const activeWeekGraphData = DAYS.map((day, index) => {
         const acc = getDailyAccuracy(day);
@@ -381,12 +291,6 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
                                 >
                                     Review
                                 </button>
-                                <button
-                                    onClick={() => setViewMode('history')}
-                                    className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${viewMode === 'history' ? 'bg-purple-600 text-white' : 'text-muted-foreground hover:text-white'}`}
-                                >
-                                    Trends
-                                </button>
                             </div>
 
                             <div className="space-y-4">
@@ -416,7 +320,7 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
                                                     <p className="text-[10px] text-muted-foreground">Archive current progress and start fresh next week.</p>
                                                 </div>
                                                 <Button
-                                                    onClick={archiveWeek}
+                                                    onClick={() => {}}
                                                     disabled={weeklyCompleted === 0}
                                                     className="bg-purple-600 hover:bg-purple-700 h-10 px-6 rounded-xl text-[10px] font-black uppercase italic shadow-lg shadow-purple-500/20"
                                                 >
@@ -425,114 +329,15 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
                                             </div>
                                         </div>
                                     </div>
-                                ) : viewMode === 'weekly' ? (
+                                ) : (
                                     <div className="space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                         <div className="flex items-center justify-between mb-4">
                                             <div>
                                                 <h3 className="text-lg font-bold text-white uppercase tracking-tight italic">Weekly Performance</h3>
                                                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Daily Accuracy Breakdown</p>
                                             </div>
-                                            <Button
-                                                onClick={() => setViewMode('history')}
-                                                variant="glass"
-                                                className="h-10 rounded-xl px-4 text-[10px] font-black uppercase italic border-purple-500/20 text-purple-400 flex items-center gap-2"
-                                            >
-                                                Expose Trends <BarChart3 className="h-4 w-4" />
-                                            </Button>
                                         </div>
                                         {DAYS.map((day) => renderDayRow(day, false, true))}
-                                    </div>
-                                ) : (
-                                    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                        <div className="flex items-center justify-between">
-                                            <div className="space-y-1">
-                                                <h3 className="text-lg font-bold text-white uppercase tracking-tight italic">Weekly Trend</h3>
-                                                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-black italic">Active Week Progression (Mon-Sun)</p>
-                                            </div>
-                                            <Button
-                                                onClick={clearHistory}
-                                                variant="ghost"
-                                                className="text-red-400/50 hover:text-red-400 hover:bg-red-400/10 h-8 px-3 rounded-lg text-[8px] font-black uppercase"
-                                            >
-                                                <Trash2 className="h-3 w-3 mr-1" /> Clear Data
-                                            </Button>
-                                        </div>
-
-                                        <div className="space-y-8">
-                                            <div className="h-[250px] w-full p-4 rounded-3xl bg-white/[0.02] border border-white/5">
-                                                <ResponsiveContainer width="100%" height="100%">
-                                                    <AreaChart data={activeWeekGraphData}>
-                                                        <defs>
-                                                            <linearGradient id="colorAcc" x1="0" y1="0" x2="0" y2="1">
-                                                                <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3} />
-                                                                <stop offset="95%" stopColor="#a855f7" stopOpacity={0} />
-                                                            </linearGradient>
-                                                        </defs>
-                                                        <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
-                                                        <XAxis
-                                                            dataKey="day"
-                                                            stroke="#ffffff20"
-                                                            fontSize={10}
-                                                            fontWeight="bold"
-                                                            tickLine={false}
-                                                            axisLine={false}
-                                                        />
-                                                        <YAxis
-                                                            stroke="#ffffff20"
-                                                            fontSize={10}
-                                                            tickLine={false}
-                                                            axisLine={false}
-                                                            domain={[0, 100]}
-                                                            tickFormatter={(v) => `${v}%`}
-                                                        />
-                                                        <Tooltip
-                                                            contentStyle={{ backgroundColor: '#0d0d0d', border: '1px solid #ffffff10', borderRadius: '12px' }}
-                                                            itemStyle={{ color: '#a855f7', fontSize: '12px', fontWeight: 'bold' }}
-                                                            labelStyle={{ color: '#ffffff50', fontSize: '10px' }}
-                                                        />
-                                                        <Area
-                                                            type="monotone"
-                                                            dataKey="accuracy"
-                                                            stroke="#a855f7"
-                                                            strokeWidth={3}
-                                                            fillOpacity={1}
-                                                            fill="url(#colorAcc)"
-                                                            animationDuration={1500}
-                                                        />
-                                                    </AreaChart>
-                                                </ResponsiveContainer>
-                                            </div>
-
-                                            <div className="space-y-3">
-                                                <h4 className="text-[10px] font-black text-white/40 uppercase tracking-widest italic pl-2">Past Recorded Days</h4>
-                                                {history.length > 0 ? (
-                                                    <div className="grid grid-cols-2 gap-3">
-                                                        {history.slice().sort((a, b) => b.timestamp - a.timestamp).map((entry, idx) => (
-                                                            <div key={idx} className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-between">
-                                                                <div>
-                                                                    <p className="text-[8px] font-black text-purple-400 uppercase">{entry.day}</p>
-                                                                    <p className="text-xs font-bold text-white">{entry.date}</p>
-                                                                </div>
-                                                                <div className="text-right">
-                                                                    <p className="text-sm font-black italic text-white">{entry.accuracy}%</p>
-                                                                    <p className="text-[8px] font-bold text-muted-foreground uppercase italic leading-none">Scored</p>
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                ) : (
-                                                    <div className="p-12 text-center space-y-4 bg-white/[0.01] border border-dashed border-white/5 rounded-[2rem]">
-                                                        <div className="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto">
-                                                            <History className="h-8 w-8 text-purple-400/40" />
-                                                        </div>
-                                                        <div className="space-y-1">
-                                                            <p className="text-white font-bold italic uppercase">No Archives Yet</p>
-                                                            <p className="text-xs text-muted-foreground leading-relaxed px-10">Historical logs will appear here after you archive your progress.</p>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -564,7 +369,7 @@ export function GymWeeklyRecordsModal({ isOpen, onClose, schedule, workoutGuides
                                 onClick={onClose}
                                 className="w-full mt-8 h-16 bg-purple-600 hover:bg-purple-700 text-white font-black italic uppercase tracking-tight rounded-2xl shadow-2xl shadow-purple-500/40 transition-all active:scale-[0.98]"
                             >
-                                {viewMode === 'today' ? 'Done for Today' : (viewMode === 'history' ? 'Close Trend' : 'Save & Exit Records')}
+                                {viewMode === 'today' ? 'Done for Today' : 'Save & Exit Records'}
                             </Button>
                         </div>
                     </motion.div>
