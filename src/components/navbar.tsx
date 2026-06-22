@@ -35,7 +35,15 @@ export function Navbar() {
                     </button>
                     <ThemeToggle />
                     {user && (
+<<<<<<< HEAD
                         <div className="pl-4 border-l border-border">
+=======
+                        <div className="flex items-center gap-3 pl-4 border-l border-border">
+                            <div className="hidden md:block text-right">
+                                <p className="text-sm font-semibold">{user.name || "Athlete"}</p>
+                                <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none">Pro Member</p>
+                            </div>
+>>>>>>> 2a696a50aa9d9b6d123f279ec00a9adbb65f0ee7
                             <UserControls />
                         </div>
                     )}
